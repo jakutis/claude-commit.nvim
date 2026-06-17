@@ -120,7 +120,7 @@ local function get_suggestion_async(callback)
   local args = {
     'claude',
     '--output-format', 'json',
-    '--model', 'claude-sonnet-4-20250514',
+    '--model', 'sonnet',
     '--max-turns', '1'
   }
   
