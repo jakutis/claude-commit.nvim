@@ -58,13 +58,13 @@ end
 ---@param patch string The git diff patch
 ---@return string prompt The formatted prompt
 local function build_commit_prompt(patch)
-  return "Analyze the provided git diff and generate a concise, descriptive commit message following conventional commit format. Return ONLY the commit message with no additional explanation, commentary, or formatting.\n\n" ..
+  return "Analyze the provided git diff and generate a commit message. Return ONLY the commit message without wrapping quotes or anything additional.\n\n" ..
     "The commit message should:\n" ..
-    "- Start with a type (feat, fix, docs, style, refactor, test, chore, etc.)\n" ..
-    "- Include a brief description of what changed\n" ..
-    "- Be under 50 characters for the subject line\n" ..
+    "- Be specific\n" ..
+    "- Be under 72 characters\n" ..
+    "- Format: '<scope of what changed>: <description of what changed>'\n" ..
     "- Use imperative mood (e.g., 'add', 'fix', 'update')\n\n" ..
-    "Example format: 'feat: add user authentication middleware'\n\n" .. patch
+    "Example format: 'src/init.ts: add user authentication middleware'\n\n" .. patch
 end
 
 ---Parse Claude's JSON response and extract the commit message
@@ -120,7 +120,7 @@ local function get_suggestion_async(callback)
   local args = {
     'claude',
     '--output-format', 'json',
-    '--model', 'sonnet',
+    '--model', 'opus',
     '--max-turns', '1'
   }
   
